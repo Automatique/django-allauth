@@ -30,6 +30,6 @@ class SocialAccount(models.Model):
         for f in ['twitteraccount', 'openidaccount', 'facebookaccount']:
             try:
                 return getattr(self, f)
-            except self._meta.get_field_by_name(f)[0].model.DoesNotExist:
+            except FieldDoesNotExist:
                 pass
         assert False
