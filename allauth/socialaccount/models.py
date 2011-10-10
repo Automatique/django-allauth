@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from django.db.models.fields import FieldDoesNotExist
+
 
 
 class SocialAccount(models.Model):
@@ -27,9 +27,9 @@ class SocialAccount(models.Model):
 
 
     def get_provider_account(self):
-        for f in ['twitteraccount', 'openidaccount', 'facebookaccount']:
+        for f in ['twitteraccount', 'facebookaccount']:
             try:
                 return getattr(self, f)
-            except FieldDoesNotExist:
+            except self._meta.get_field_by_name(f)[0].model.DoesNotExist:
                 pass
         assert False
